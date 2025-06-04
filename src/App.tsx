@@ -41,29 +41,16 @@ export class App extends React.Component {
   }
 
   componentWillUnmount(): void {
+    window.clearInterval(this.nameIntervalId);
     document.removeEventListener('contextmenu', this.handleRightClick);
     document.removeEventListener('click', this.handleClick);
-  }
-
-  componentDidUpdate(_: {}, prevState: Readonly<State>): void {
-    if (this.state.clockName !== prevState.clockName) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `Renamed from ${prevState.clockName} to ${this.state.clockName}`,
-      );
-    }
   }
 
   render(): React.ReactNode {
     return (
       <div className="App">
         <h1>React clock</h1>
-        {this.state.hasClock && (
-          <Clock
-            clockName={this.state.clockName}
-            nameIntervalId={this.nameIntervalId}
-          />
-        )}
+        {this.state.hasClock && <Clock clockName={this.state.clockName} />}
       </div>
     );
   }
